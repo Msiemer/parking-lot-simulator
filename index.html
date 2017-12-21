@@ -13,11 +13,11 @@
 
     var cars = 100;
 
-    function makeCar(color, model, year) {
+    function makeCar(color, make, year) {
         var car = {
             color: color,
-            model: model,
-            year: year
+            make: make,
+            year: year,
         };
         return car;
     }
@@ -33,23 +33,28 @@
     }
     console.log(buildYourCars(100));
 
-    function carLot(car) {
-        this.car;
+    function carLot(id) {
+        this.id = id;
         this.vacant = true;
         return this;
     }
-    var openSpace = [parkingSpace, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    var space = [0];
+    var openSpace = [];
+    var space = [];
 
     for (var i = 0; i < 10; i++) {
-        openSpace.push(new parkingSpace);
+        openSpace.push(new carLot(i + 1));
     }
 
     function parkTheCar() {
         for (var i = 0; i < openSpace.length; i++) {
+            if (openSpace[i].vacant == true) {
                 console.log(i, openSpace[i]);
+            }
         }
     }
+
+    console.log(openSpace);
+    console.log();
     </script>
 </body>
 
