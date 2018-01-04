@@ -13,20 +13,17 @@
 
     var cars = 100;
 
-    function makeCar(color, make, year) {
-        var car = {
-            color: color,
-            make: make,
-            year: year,
-        };
-        return car;
+    function makeCar(color, make, year, plate) {
+            this.color = color;
+            this.make = make;
+            this.year = year;
+            this.plate = plate;
     }
-    console.log(makeCar("red", "ford", "1980"));
-
+    console.log(makeCar("red", "ford", 1980, "0ud87f4"));
     function buildYourCars(count) {
         var result = [];
         for (var i = 0; i < count; i++) {
-            var car = makeCar("red", "ford", "1980")
+            var car = makeCar("red", "ford", 1980, "0ud87f4")
             result.push(car);
         }
         return result;
@@ -42,13 +39,13 @@
     var space = [];
 
     for (var i = 0; i < 10; i++) {
-        openSpace.push(new carLot(i + 1));
+        openSpace.push(new carLot(i+1));
     }
 
     function parkTheCar() {
         for (var i = 0; i < openSpace.length; i++) {
-            if (openSpace[i].vacant == true) {
-                console.log(i, openSpace[i]);
+            if(openSpace[i].vacant == true) {
+            	console.log(i, openSpace[i]);
             }
         }
     }

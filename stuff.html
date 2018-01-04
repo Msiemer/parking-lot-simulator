@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script>
+    var cars = 100;
+    var i = 0;
+
+    function makeCar(color, make, plate, year) {
+        this.color = color;
+        this.make = make;
+        this.plate = plate;
+        this.year = year;
+    }
+    console.log(new makeCar("Red", "toyota", "D13-BRD", 2018));
+
+    function buildYourCars(count) {
+        var result = [];
+
+        for (var i = 0; i < count; i++) {
+            var car = new makeCar("Red", "toyata", "D13-BRD", 2018);
+            var parked = false;
+            result.push(car);
+        }
+        return result;
+    }
+    var unparkedCars = buildYourCars(100);
+
+    var parkedCars = [];
+
+    var unusedPlots = [];
+
+    var usedPlots = [];
+
+    function Plot(number) {
+        this.number = number;
+    }
+
+    function buildPlots() {
+        for (var i = 0; i < 10; i++) {
+            unusedPlots.push(new Plot(i));
+        }
+    }
+    buildPlots();
+
+    function parkOneCar() {
+        if (unparkedCars.length > 0 && unusedPlots.length > 0) {
+            var car = unparkedCars.splice(0, 1);
+            var plot = unusedPlots.splice(0, 1);
+            parkedCars.push(car[0]);
+            usedPlots.push(plot[0]);
+
+            console.log("(" + makeCar.color + ")" + " - " + "(" + makeCar.model + ")" + " - " + "(" + makeCar.plate + ")" + " - " + "(" + makeCar.year + ")");
+
+
+            ScheduleCarToLeave(car[0], plot[0]);
+        }
+    }
+    console.log(unparkedCars);
+
+    console.log(parkedCars);
+
+    function ScheduleCarToLeave(car, plot) {
+        setTimeout(function() {
+            var carIndex = parkedCars.indexOf(car);
+            parkedCars.splice(carIndex, 1);
+
+            var plotIndex = usedPlots.indexOf(plot);
+            usedPlots.splice(plotIndex, 1);
+
+            unusedPlots.push(plot);
+
+            console.log("cars are gone");
+        }, 1000);
+    }
+
+    var intervalId = setInterval(function() {
+
+        parkOneCar();
+
+        if (unparkedCars.length == 0) {
+            clearInterval(intervalId);
+        }
+
+    }, 500);
+
+    console.log(unusedPlots);
+
+    console.log(usedPlots);
+
+    </script>
+</head>
+
+<body>
+</body>
+
+</html>
