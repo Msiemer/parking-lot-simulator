@@ -4,55 +4,118 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-</head>
-
-<body>
     <script>
-    //how do i make this from 1 single car to 100 cars with random makes, plates and years?
 
-
+    //making instance of 100 cars   
     var cars = 100;
 
-    function makeCar(color, make, year, plate) {
-            this.color = color;
-            this.make = make;
-            this.year = year;
-            this.plate = plate;
+    //making a variabl named i that eaqules 0
+    var i = 0;
+
+
+    //create a car that includes a color, plate, year, and make 
+    function makeCar(color, make, plate, year) {
+        this.color = color;
+        this.make = make;
+        this.plate = plate;
+        this.year = year;
+
     }
-    console.log(makeCar("red", "ford", 1980, "0ud87f4"));
+
+
+    //made or created an instance of a car
+    var car = new makeCar("Red", "toyota", i, 2018);
+    console.dir(car);
+
+    console.log(new makeCar("Red", "toyota", i, 2018));
+
     function buildYourCars(count) {
         var result = [];
+    //increments the plate number by 1
         for (var i = 0; i < count; i++) {
-            var car = makeCar("red", "ford", 1980, "0ud87f4")
+            var car = new makeCar("Red", "toyata", i, 2018);
+            var parked = false;
             result.push(car);
         }
         return result;
     }
-    console.log(buildYourCars(100));
+    var unparkedCars = buildYourCars(100);
 
-    function carLot(id) {
-        this.id = id;
-        this.vacant = true;
-        return this;
-    }
-    var openSpace = [];
-    var space = [];
+    var parkedCars = [];
 
-    for (var i = 0; i < 10; i++) {
-        openSpace.push(new carLot(i+1));
+    var unusedPlots = [];
+
+    var usedPlots = [];
+
+    function Plot(number) {
+        this.number = number;
     }
 
-    function parkTheCar() {
-        for (var i = 0; i < openSpace.length; i++) {
-            if(openSpace[i].vacant == true) {
-            	console.log(i, openSpace[i]);
-            }
+    function buildPlots() {
+        for (var i = 0; i < 10; i++) {
+            unusedPlots.push(new Plot(i));
         }
     }
+    buildPlots();
 
-    console.log(openSpace);
-    console.log();
+    function parkOneCar() {
+        if (unparkedCars.length > 0 && unusedPlots.length > 0) {
+            var car = unparkedCars.shift(0, 1);
+            var plot = unusedPlots.shift(0, 1);
+
+
+            //moving car into collectionofParkedCars
+            parkedCars.push(car);
+            usedPlots.push(plot);
+
+            console.log("(" + car.color + " - " + car.make + ")" + " - " + "(" + car.plate + ")" + " - " + "(" + car.year + ")");
+
+
+            ScheduleCarToLeave(car, plot);
+        }
+    }
+    console.log(unparkedCars);
+    console.log(parkedCars);
+    //created a function named ScheduleCarToLeave 
+    function ScheduleCarToLeave(car, plot) {
+
+        //created a variable called schelduleCarToLeaveRandomly that 
+        //randomises the leaving cars
+        var schelduleCarToLeaveRandomly = getRandomArbitrary(1000, 5000);
+        setTimeout(function() {
+            var carIndex = parkedCars.indexOf(car);
+            parkedCars.pop(carIndex, 1);
+
+            var plotIndex = usedPlots.indexOf(plot);
+            usedPlots.pop(plotIndex, 1);
+            unusedPlots.push(plot);
+
+            console.log("   the car with the plate number", car.plate, "left  the parkinglot.");
+
+        }, schelduleCarToLeaveRandomly);
+    }
+
+    var intervalId = setInterval(function() {
+        parkOneCar();
+
+        if (unparkedCars.length == 0) {
+            clearInterval(intervalId);
+        }
+    }, 1000);
+
+    console.log(unusedPlots);
+
+    console.log(usedPlots);
+
+    function getRandomArbitrary(min, max) {
+
+        return Math.random() * (max - min + 1) + min;
+    }
+    
     </script>
+</head>
+
+<body>
 </body>
 
 </html>
